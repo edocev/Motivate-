@@ -1,35 +1,34 @@
-<?php 
+<?php
 /*
 Plugin Name: Motivate!
-Pluggin URI: https://github.com/edocev/Motivate-
-Description: A very simple plugin that displays random quote, using shortcode
+Pluggin URI: https://github.com/edocev/Motivate
+Description: A very simple plugin that displays random quote using shortcode
+Version: 1.0
 Author: edocev
 Author URI: https://profiles.wordpress.org/edocev
 License: GPL2
-*/ 
+*/
 
-define( 'DXP_VERSION', '1.6' );
-define( 'DXP_PATH', dirname( __FILE__ ) );
-define( 'DXP_PATH_INCLUDES', dirname( __FILE__ ) . '/inc' );
-define( 'DXP_FOLDER', basename( DXP_PATH ) );
-define( 'DXP_URL', plugins_url() . '/' . DXP_FOLDER );
-define( 'DXP_URL_INCLUDES', DXP_URL . '/inc' );
-
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 global $jal_db_version;
 $jal_db_version = '1.0';
 
-function jal_install() {
+//
+//	Adds the DB Table
+//
+function ed_jal_install() {
 	global $wpdb;
 	global $jal_db_version;
 
-	$table_name = $wpdb->prefix . 'quotes';
-	
+	$table_name = $wpdb->prefix . 'ed_quotes';
+
 	$charset_collate = $wpdb->get_charset_collate();
 
 	$sql = "CREATE TABLE $table_name (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		quote VARCHAR(300) NOT NULL,
+		quote varchar(300) NOT NULL,
+		author varchar(100) NOT NULL,
 		PRIMARY KEY  (id)
 	) $charset_collate;";
 
@@ -39,13 +38,23 @@ function jal_install() {
 	add_option( 'jal_db_version', $jal_db_version );
 }
 
-function jal_instsall_data() {
+//
+// Inserts demo quotes to the table
+//
+/*function ed_jal_install_data() {
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'quotes';
 
-	$wpdb->insert( $table_name, array('id' => '1', 'quote'=>'blah') );
+	$welcome_name = 'Mr. WordPress';
+	$welcome_text = 'Congratulations, you just completed the installation!';
 
-}
+	$table_name = $wpdb->prefix . 'ed_quotes';
 
-register_activation_hook( __FILE__, 'jal_install' );
-register_activation_hook( __FILE__, 'jal_install_data' );
+	$wpdb->query("INSERT INTO $table_name
+				(quote, author)
+				VALUES
+				('But man is not made for defeat. A man can be destroyed but not defeated.','Ernest Hemingway' )
+				('The way get started is to quit talking and begin doing.','Walt Disney' )" );
+}*/
+
+register_activation_hook( __FILE__, 'ed_jal_install' );
+/*register_activation_hook( __FILE__, 'ed_jal_install_data' );*/
