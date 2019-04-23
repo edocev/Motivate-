@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Motivate!
+Plugin Name: Motivate
 Pluggin URI: https://github.com/edocev/Motivate
 Description: A very simple plugin that displays random quote using shortcode
 Version: 1.0
@@ -15,7 +15,7 @@ global $jal_db_version;
 $jal_db_version = '1.0';
 
 //
-//	Adds the DB Table
+//	Adds the DB Table.
 //
 function ed_jal_install() {
 	global $wpdb;
